@@ -1,0 +1,82 @@
+---
+title: "Project_4"
+author: ""
+date: "November 10, 2016"
+output: html_document
+---
+ 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+ 
+## Introduction
+## Importing All Airline Records from MySQL Database
+## Filtering and Plotting "Delayed" Records
+## Exporting All Airline Records into MongoDB
+## Filtering and Plotting "On Time" Records
+ 
+```{r Flights}
+ 
+list.of.packages <- c("RMySQL","plotly","mongolite","tidyr","dplyr")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+ 
+library(RMySQL)
+library(plotly)
+library(mongolite)
+library(tidyr)
+library(dplyr)
+
+# Connect to the MySQL database
+mydb = dbConnect(MySQL(), user='user1', password='Password1234', dbname='sys', host='localhost')
+ 
+rs = dbSendQuery(mydb, "select * from Airline")
+ 
+# load records to data frame
+Mydata1 = fetch(rs, n=-1)
+ 
+# 4 Records in MySQL database (Delayed and On Time Records)
+Mydata1
+
+# Format and Filter Delayed Records 
+Mydata2=Mydata1 %>%
+        gather(Destination, Frequency, 3:7)  %>% filter(Arrival == 'Delayed')
+
+# Print Delayed Records 
+Mydata2
+
+# Plot the Delayed Records
+p1<-plot_ly(x = ~Mydata2$Airline, y = ~Mydata2$Frequency, color = ~Mydata2$Destination) %>% 
+  layout(title = "Delayed", xaxis = list(title = "Airline"), yaxis = list(title = "Frequency"), barmode = 'stack')  
+
+p1
+
+# Format 20 Records  (Delayed and On Time)
+Mydata3=Mydata1 %>%
+        gather(Destination, Frequency, 3:7)  
+
+Mydata3
+
+# Write 20 Records  (Delayed and On Time) to MongoDB
+m1 <- mongo(collection = "Airline")
+m1$insert(Mydata3) 
+
+# Performing a query and retrieving On Time only records from MongoDB
+m2 <- m1$find('{"Arrival":"On Time"}')
+
+# Printing On Time only records from MongoDB
+m2
+
+# Plot the Delayed Records
+p2<-plot_ly(x = ~m2$Airline, y = ~m2$Frequency, color = ~m2$Destination) %>% 
+  layout(title = "On Time", xaxis = list(title = "Airline"), yaxis = list(title = "Frequency"), barmode = 'stack')  
+
+p2
+
+# Delete MongoDB collection
+m1$drop() 
+
+```
+## Conclusion
+ 
+ 
