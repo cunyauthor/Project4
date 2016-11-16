@@ -1,6 +1,6 @@
 ---
 title: "Project_4"
-author: ""
+author: "Ka Man Chan"
 date: "November 10, 2016"
 output: html_document
 ---
@@ -77,6 +77,21 @@ p2
 m1$drop() 
 
 ```
-## Conclusion
- 
+### Having Dynamic schemas is one of the pros for NoSQL. Information can be added on the fly, and each row doesn’t have to contain data for each column. On the other hand, in SQL, each record corresponds to fixed schema. the columns have to be decided and locked before data entry and each row has to contain data for each column. 
+
+### Having Elastic scaling is one of the pro for NoSQL. The volumes of "big data" that can be handled by NoSQL systems. DB Admin can scale out/distributing the database across multiple hosts as load increases instead of scale up — buying bigger servers as database load increases
+
+### Requiring less management is one of the Pros for NoSQL. Comparing with traditional DBMS, NoSQL databases are automatic repair, data distribution, and its simpler data models lead to reduce administration and tuning requirements
+
+### Economics is one of the Pros for NoSQL. It can be many times less than the cost for RDBMS.
+
+### Forgoing ACID compliancy for performance and scalability is one of the cons for NoSQL. On the other hand, relational databases are ACID compliant. (Atomicity, Consistency, Isolation, Durability)
+
+### Lack of Enterprises level support is one of the cons for NoSQL Comparing with traditional DBMS, NoSQL may not have the same level of support resources
+
+### Last but not least, as a hiring manager, it is easy to find experts of RDBMS but is much harder to find good export for NoSQL because almost every NoSQL developer is in a learning mode
+
+### http://dataconomy.com/sql-vs-nosql-need-know/
+### http://www.techrepublic.com/blog/10-things/10-things-you-should-know-about-nosql-databases/
+
  
